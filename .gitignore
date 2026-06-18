@@ -1,20 +1,41 @@
-# Secrets
+# Environment / secrets
 .env
+.env.*
+
+# Editors / IDEs
 .vscode/
+.idea/
 
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
+*.pyd
 .venv/
 venv/
+python-venv/
 
-# Jupyter
+# Jupyter / notebooks
 .ipynb_checkpoints/
+*.ipynb_checkpoints/
 
-# Models (large files)
-models/*.pkl
+# Model artifacts / outputs
+*.pkl
+*.joblib
+*.h5
+*.pb
+models/
+notebooks/models/
 
-# Data (raw có thể sensitive)
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Generated dataset artifacts
 data/collected/
 data/processed/
