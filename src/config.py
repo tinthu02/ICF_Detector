@@ -147,7 +147,7 @@ EXPANSION_MAX_CANDIDATES: int = 200
 # ══════════════════════════════════════════════════════════════════════════════
 
 # Điều chỉnh ngưỡng slop chính
-AUTO_EXPAND_CONFIDENCE_THRESHOLD = 0.93   # giảm nhẹ từ 0.95
+AUTO_EXPAND_CONFIDENCE_THRESHOLD = 0.92   # giảm nhẹ từ 0.95
 
 # Ngưỡng slop tuyệt đối (luôn lấy)
 AUTO_EXPAND_SLOP_HIGH_CONFIDENCE = 0.97

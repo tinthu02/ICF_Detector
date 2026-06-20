@@ -1,70 +1,65 @@
 # ICF Detector
 
-ICF Detector is a machine-learning project for identifying likely slop or low-quality content from channel metadata and text signals.
+ICF Detector là dự án Học máy nhằm phát hiện các kênh YouTube **AI Slop** – những kênh sử dụng nội dung tự động, clickbait, hoặc kém chất lượng – dựa trên metadata và đặc trưng văn bản.
 
-## Project goal
+## 🎯 Mục tiêu
 
-The pipeline combines:
-- feature engineering from channel and content metadata
-- anomaly scoring
-- model training and evaluation
-- prediction utilities for new samples
+Xây dựng pipeline hoàn chỉnh từ thu thập dữ liệu, trích xuất đặc trưng, huấn luyện mô hình, đến dự đoán. Hiện tại mô hình Random Forest đạt **F1 ≈ 0.89** trên tập test.
 
-## Repository structure
+## 📊 Dữ liệu
 
-- `main.py` — entry point for running the project
-- `src/` — data collection, feature extraction, model training, and prediction code
-- `data/` — raw and processed datasets
-- `notebooks/` — exploratory analysis and evaluation notebooks
-- `models/` — trained model artifacts (ignored by Git unless you explicitly want to track them)
+- **File đặc trưng chính**: `features_final.csv` (chia sẻ qua Google Drive, luôn cập nhật phiên bản mới nhất).  
+- **Số lượng**: 712 kênh (335 AI Slop, 377 Genuine).  
+- **13 đặc trưng tĩnh** cho mỗi kênh, thuộc 4 nhóm:
+  - *Chuỗi thời gian & vận tốc đăng bài*: `time_interval_std`, `upload_burst_ratio`, `video_upload_frequency`, `view_per_video`
+  - *Dấu vết văn bản AI*: `dash_density`, `title_length_std`, `capitalization_ratio`, `opening_repeat_ratio`, `temporal_clickbait_ratio`
+  - *Độ đa dạng & tương đồng nội dung*: `type_token_ratio`, `avg_title_similarity`
+  - *Chỉ số tương tác*: `sub_to_view_ratio`, `subscriber_velocity`
+- **Nhãn**: `label` (0 = Genuine, 1 = AI Slop).  
+- **Ngôn ngữ**: Cả tiếng Anh và tiếng Việt, đã được tokenizer riêng (Underthesea cho tiếng Việt) xử lý trong pipeline.
 
-## Dataset files
+🔗 **Link dữ liệu (Google Drive – tự động cập nhật)**:  
+`https://drive.google.com/uc?id=<YOUR_FILE_ID>` (ID được cung cấp riêng) 
 
-The correct seed dataset files are:
+## 📁 Cấu trúc repository
+ICF_Detector/
+├── main.py # Entry point (nếu có)
+├── requirements.txt
+├── src/
+│ ├── config.py # Cấu hình trung tâm (API key, paths, tham số)
+│ ├── crawl.py # Thu thập dữ liệu kênh YouTube
+│ ├── crawl_expand.py # Thu thập bổ sung cho kênh mới
+│ ├── crawl_auto_expand.py # Thu thập tự động kênh mới (dựa trên pipeline)
+│ ├── features.py # Trích xuất đặc trưng
+│ ├── train.py # Huấn luyện Random Forest (pipeline an toàn)
+│ ├── predict.py # Dự đoán nhanh một kênh bất kỳ
+│ ├── expand.py # Tự động mở rộng dataset dựa trên mô hình
+│ ├── compare_models.py # So sánh nhiều mô hình (baseline)
+│ ├── anomaly.py # Tính anomaly score bằng Isolation Forest
+│ └── utils.py # Các hàm tiện ích
+├── data/
+│ ├── raw/ # File seed (URL kênh)
+│ ├── collected/ # Kênh đã crawl (CSV)
+│ └── processed/ # Đặc trưng, intervals, so sánh mô hình
+├── models/ # Mô hình đã lưu (random_forest.pkl)
+└── notebooks/ # Notebook EDA và trực quan hóa
 
-- `data/raw/AI slop.txt` — 144 channels (seed slop)
-- `data/raw/non AI.txt` — 63 channels (seed genuine)
 
-There are also expanded files available for additional crawling/expansion:
+## 🚀 Bắt đầu nhanh
 
-- `data/raw/AI slop expand.txt` — 169 channels
-- `data/raw/non AI expand.txt` — 151 channels
-- `data/raw/non AI expand 2.txt` — 102 channels
-
-> Note: the genuine seed file is `non AI.txt` (not `non AU.txt`).
-
-## Setup
-
-1. Create and activate a virtual environment
-2. Install dependencies:
+1. **Clone repo**:
    ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the pipeline:
-   ```bash
-   python main.py
-   ```
-
-## Typical workflow
-
-- Generate or refresh features:
+   git clone https://github.com/tinthu02/ICF_Detector.git
+   cd ICF_Detector
+2. **Tạo virtual environment & cài đặt**:
   ```bash
-  python src/features.py
-  ```
-- Train the model:
+  python -m venv .venv
+  source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+3. **Chuẩn bị dữ liệu: Tải features_final.csv từ link Drive trên, đặt vào data/processed/**
+4. **Huấn luyện mô hình**:
   ```bash
   python src/train.py
-  ```
-- Run predictions:
+5. **Dự đoán kênh mới**:
   ```bash
-  python src/predict.py
-  ```
-
-## Notes
-
-- The project expects the dataset files under `data/` to be available before training.
-- Model outputs are not committed by default to keep the repository lightweight.
-
-## Requirements
-
-See [requirements.txt](requirements.txt) for the current dependency list.
+  python src/predict.py "https://www.youtube.com/@ExampleChannel"
