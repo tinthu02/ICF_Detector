@@ -45,7 +45,7 @@ ICF_Detector/
 │ └── processed/ # Đặc trưng, intervals, so sánh mô hình
 ├── models/ # Mô hình đã lưu (random_forest.pkl)
 └── notebooks/ # Notebook EDA và trực quan hóa
-
+```
 
 ## Bắt đầu nhanh
 
