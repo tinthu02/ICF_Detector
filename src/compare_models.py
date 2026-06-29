@@ -4,9 +4,8 @@ compare_models.py
 So sánh nhiều mô hình Machine Learning
 trên dataset features_final.csv
 """
-
-
-
+import os
+from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -99,7 +98,6 @@ def evaluate_model(name, model, X_train, X_test, y_train, y_test):
     return result
 
 def plot_results(results_df):
-
     plt.figure(figsize=(8, 5))
 
     bars = plt.bar(
@@ -109,7 +107,6 @@ def plot_results(results_df):
 
     for bar in bars:
         height = bar.get_height()
-
         plt.text(
             bar.get_x() + bar.get_width() / 2,
             height + 0.01,
@@ -121,21 +118,19 @@ def plot_results(results_df):
     plt.title("Model Comparison (F1 Score)")
     plt.xlabel("Model")
     plt.ylabel("F1 Score")
-
     plt.ylim(0, 1)
-
     plt.grid(axis="y", linestyle="--", alpha=0.4)
-
     plt.tight_layout()
 
-    plt.savefig(
-        "data/processed/comparison_chart.png",
-        dpi=300,
-    )
+    # ---- Sửa phần lưu ảnh ----
+    from pathlib import Path  # đảm bảo import (có thể đặt ở đầu file)
+    project_root = Path(__file__).resolve().parent.parent  # thư mục gốc dự án
+    fig_dir = project_root / "output" / "figures"
+    fig_dir.mkdir(parents=True, exist_ok=True)
 
+    plt.savefig(fig_dir / "comparison_chart.png", dpi=300, bbox_inches="tight")
     plt.close()
-
-    print("Saved comparison_chart.png")
+    print(f"Saved comparison_chart.png → {fig_dir / 'comparison_chart.png'}")
 # ===========================
 # Main
 # ===========================
