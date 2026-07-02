@@ -9,7 +9,7 @@ Xây dựng pipeline hoàn chỉnh từ thu thập dữ liệu, trích xuất đ
 ## Dữ liệu
 
 - **File đặc trưng chính**: `features_final.csv` (chia sẻ qua Google Drive, luôn cập nhật phiên bản mới nhất).  
-- **Số lượng**: 712 kênh (335 AI Slop, 377 Genuine).  
+- **Số lượng**: 835 kênh (359 AI Slop, 476 Genuine).  
 - **13 đặc trưng tĩnh** cho mỗi kênh, thuộc 4 nhóm:
   - *Chuỗi thời gian & vận tốc đăng bài*: `time_interval_std`, `upload_burst_ratio`, `video_upload_frequency`, `view_per_video`
   - *Dấu vết văn bản AI*: `dash_density`, `title_length_std`, `capitalization_ratio`, `opening_repeat_ratio`, `temporal_clickbait_ratio`
