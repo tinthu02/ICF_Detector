@@ -11,10 +11,10 @@ Xây dựng pipeline hoàn chỉnh từ thu thập dữ liệu, trích xuất đ
 - **File đặc trưng chính**: `features_final.csv` (chia sẻ qua Google Drive, luôn cập nhật phiên bản mới nhất).  
 - **Số lượng**: 835 kênh (359 AI Slop, 476 Genuine).  
 - **13 đặc trưng tĩnh** cho mỗi kênh, thuộc 4 nhóm:
-  - *Chuỗi thời gian & vận tốc đăng bài*: `time_interval_std`, `upload_burst_ratio`, `video_upload_frequency`, `view_per_video`
-  - *Dấu vết văn bản AI*: `dash_density`, `title_length_std`, `capitalization_ratio`, `opening_repeat_ratio`, `temporal_clickbait_ratio`
-  - *Độ đa dạng & tương đồng nội dung*: `type_token_ratio`, `avg_title_similarity`
-  - *Chỉ số tương tác*: `sub_to_view_ratio`, `subscriber_velocity`
+  - *Chuỗi thời gian & vận tốc đăng bài*: `time_interval_std`(Độ lệch chuẩn của khoảng thời gian tải video), `upload_burst_ratio` (Tỷ lệ đăng bài dồn dập), `video_upload_frequency` (Tần suất tải video), `view_per_video`  (Lượt xem trên mỗi video)
+  - *Dấu vết văn bản AI*: `dash_density` (Mật độ dấu gạch ngang), `title_length_std` (Độ lệch chuẩn của độ dài tiêu đề), `capitalization_ratio` (Tỷ lệ viết hoa), `opening_repeat_ratio` (Tỷ lệ lặp từ mở đầu), `temporal_clickbait_ratio` (Tỷ lệ giật gân theo thời gian)
+  - *Độ đa dạng & tương đồng nội dung*: `type_token_ratio` (Tỷ lệ đa dạng từ vựng), `avg_title_similarity` (Độ tương đồng tiêu đề trung bình)
+  - *Chỉ số tương tác*: `sub_to_view_ratio` (Tỷ lệ đăng ký trên lượt xem), `subscriber_velocity` (Tốc độ tăng trưởng người đăng ký)
 - **Nhãn**: `label` (0 = Genuine, 1 = AI Slop).  
 - **Ngôn ngữ**: Cả tiếng Anh và tiếng Việt, đã được tokenizer riêng (Underthesea cho tiếng Việt) xử lý trong pipeline.
 
